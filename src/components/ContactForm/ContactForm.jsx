@@ -21,44 +21,39 @@ const ContactForm = ({ addContact }) => {
       onSubmit={addContact}
       validationSchema={FeedbackSchema}
     >
-      {({ errors }) => {
-        console.log(errors);
-        return (
-          <Form className={css.form}>
-            <label className={css.label} htmlFor="contactName">
-              <span>Name</span>
-              <Field
-                className={css.input}
-                type="text"
-                name="name"
-                id="contactName"
-              />
-              <ErrorMessage
-                className={css.errorMessage}
-                name="name"
-                component="span"
-              />
-            </label>
-            <label className={css.label} htmlFor="contactNumber">
-              <span>Number</span>
-              <Field
-                className={css.input}
-                type="number"
-                name="number"
-                id="contactNumber"
-              />
-              <ErrorMessage
-                className={css.errorMessage}
-                name="number"
-                component="span"
-              />
-            </label>
-            <button className={css.submit} type="submit">
-              Add Contact
-            </button>
-          </Form>
-        );
-      }}
+      <Form className={css.form}>
+        <label className={css.label} htmlFor="contactName">
+          <span>Name</span>
+          <Field
+            className={css.input}
+            type="text"
+            name="name"
+            id="contactName"
+          />
+          <ErrorMessage
+            className={css.errorMessage}
+            name="name"
+            component="span"
+          />
+        </label>
+        <label className={css.label} htmlFor="contactNumber">
+          <span>Number</span>
+          <Field
+            className={css.input}
+            type="number"
+            name="number"
+            id="contactNumber"
+          />
+          <ErrorMessage
+            className={css.errorMessage}
+            name="number"
+            component="span"
+          />
+        </label>
+        <button className={css.submit} type="submit">
+          Add Contact
+        </button>
+      </Form>
     </Formik>
   );
 };
