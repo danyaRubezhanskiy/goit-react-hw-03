@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import ContactForm from "./components/ContactForm/ContactForm";
 import ContactList from "./components/ContactList/ContactList";
 import SearchBox from "./components/SearchBox/SearchBox";
-import { nanoid } from "nanoid";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import store, { persistor } from "./redux/store";
 
 function App() {
   const [information, setInformation] = useState(
@@ -14,45 +16,21 @@ function App() {
     ]
   );
 
-  const [filterValue, setFilterValue] = useState("");
-
-  const handleFilter = (e) => {
-    const value = e.target.value;
-    setFilterValue(value);
-  };
-
-  const filteredList = information.filter((profile) =>
-    profile.name.toLowerCase().includes(filterValue)
-  );
-
-  const addContact = (values, actions) => {
-    const finalContact = {
-      ...values,
-      id: nanoid(),
-    };
-    actions.resetForm();
-    setInformation([...filteredList, finalContact]);
-  };
-
-  const deleteProfile = (profileId) => {
-    setInformation(information.filter((item) => item.id !== profileId));
-  };
-
   useEffect(() => {
     localStorage.setItem("users", JSON.stringify(information));
   });
 
   return (
-    <div>
-      <h1>Phonebook</h1>
-      <ContactForm addContact={addContact}></ContactForm>
-      <SearchBox filter={filterValue} handleValue={handleFilter}></SearchBox>
-      <ContactList
-        deleteProfile={deleteProfile}
-        filteredList={filteredList}
-      ></ContactList>
-    </div>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <div>
+          <h1>Phonebook</h1>
+          <ContactForm />
+          <SearchBox />
+          <ContactList />
+        </div>
+      </PersistGate>
+    </Provider>
   );
 }
-
 export default App;
